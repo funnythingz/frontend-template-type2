@@ -1,6 +1,8 @@
 const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 
 let config = {
 
@@ -33,16 +35,22 @@ let config = {
             {
                 test: /\.scss$/,
                 use: [
+                    'vue-style-loader',
                     'style-loader',
                     'css-loader',
                     'sass-loader'
                 ]
+            },
+            {
+                test: /\.vue$/,
+                loader: 'vue-loader'
             }
         ]
     },
 
     plugins: [
         new CleanWebpackPlugin(['dist']),
+        new VueLoaderPlugin()
     ]
 }
 
