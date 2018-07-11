@@ -3,7 +3,6 @@
 - webpack v4
 - babel
 - Vue.js
-- TypeScript
 
 ## command
 
@@ -22,5 +21,5 @@ $ npm run build:prod
 serve
 
 ```
-$ npm run serve
+$ npm run start:dev
 ```
