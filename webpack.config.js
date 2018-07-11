@@ -1,7 +1,8 @@
 const path = require('path')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const MiniCssExtractPlugin = require("mini-css-extract-plugin")
-const VueLoaderPlugin = require('vue-loader/lib/plugin')
+const { VueLoaderPlugin } = require('vue-loader')
+const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 
 let config = {
@@ -22,6 +23,15 @@ let config = {
 
     module: {
         rules: [
+            {
+                test: /\.html$/,
+                use: [
+                    {
+                        loader: "html-loader",
+                        options: { minimize: true }
+                    }
+                ]
+            },
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
@@ -49,13 +59,26 @@ let config = {
             {
                 test: /\.vue$/,
                 loader: 'vue-loader'
+            },
+            {
+                test: /\.pug$/,
+                oneOf: [
+                    {
+                        resourceQuery: /^\?vue/,
+                        use: ['pug-plain-loader']
+                    }
+                ]
             }
         ]
     },
 
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new VueLoaderPlugin()
+        new VueLoaderPlugin(),
+        new HtmlWebPackPlugin({
+            template: "./src/index.html",
+            filename: "./index.html"
+        })
     ]
 }
 
