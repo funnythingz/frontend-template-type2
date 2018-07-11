@@ -11,7 +11,7 @@ let config = {
             path.resolve(__dirname, 'src/app.js')
         ],
         styles: [
-            path.resolve(__dirname, 'assets/sass/styles.scss')
+            path.resolve(__dirname, 'assets/sass/styles.sass')
         ]
     },
 
@@ -33,12 +33,17 @@ let config = {
                 }
             },
             {
-                test: /\.scss$/,
+                test: /\.sass$/,
                 use: [
                     'vue-style-loader',
                     'style-loader',
                     'css-loader',
-                    'sass-loader'
+                    {
+                        loader: 'sass-loader',
+                        options: {
+                            indentedSyntax: true
+                        }
+                    }
                 ]
             },
             {
