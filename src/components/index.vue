@@ -9,7 +9,7 @@
         div.nk-time-line-text
           | {{t.tweet}}
           button.nk-tweet-like(@click="likepost(i)")
-            | {{t.count}}like
+            | {{t.count}} like
         div.nk-time-line-date
           | {{t.date}}
         br
@@ -18,8 +18,11 @@
           button.nk-res-push(@click="respost(i)")
             | res
         .list-group
-          .list-item-res-text(v-for="l in t.resList")
+          .list-item-res-text(v-for="(l, k) in t.resList")
             | {{l.res}}
+            div.res-like-button-pos
+              button.nk-res-like-button(@click="reslikepost(i, k)")
+                | {{l.count}}　like
 </template>
 
 <style lang="sass">
@@ -49,11 +52,11 @@
     border-radius: 10px
     overflow: hidden
     text-decoration: none
-    background: skyblue
+    background: linear-gradient(aquamarine, aqua)
     color: #fff
     cursor: pointer
     &:hover
-      background-color: orange
+      background: linear-gradient(aqua, blue)
   .nk-time-line-text
     border-bottom: solid 1px
     border-color: orange
@@ -67,6 +70,36 @@
     text-align: right
     margin: 0 0 10px 0
   .nk-time-line-date
+    text-align: right
+  .nk-tweet-like
+    margin: 0 0 0 10px
+    padding: 6px
+    border: 0 none
+    font-size: 14px
+    border-radius: 15px
+    overflow: hidden
+    background: linear-gradient(pink, hotpink)
+    color: #fff
+    cursor: pointer
+    &:hover
+      background: deeppink
+  .nk-res-push
+    margin: 0 0 0 10px
+    padding: 5px 15px
+    border-color: skyblue
+    font-size: 14px
+    border-radius: 5px
+    overflow: hidden
+    background: none
+    color: skyblue
+    cursor: pointer
+    &:hover
+      background: linear-gradient(lightskyblue, deepskyblue)
+      color: #fff
+  .nk-res-like-button
+    background: linear-gradient(pink, hotpink)
+  .res-like-button-pos
+    display: inline-block
     text-align: right
 </style>
 
@@ -97,15 +130,21 @@ export default{
       }
     },
     respost(i){
-      if (this.isresPresent()){
+      if (this.isresPresent(i)){
         this.timeline[i].resList.push({
-          res: this.resmessage[i]
+          res: this.resmessage[i],
+          count: 0
         })
+        console.log(this.resList)
+        console.log(this.resmessage)
         this.resmessage[i] = ''
       }
     },
     likepost(i){
       count: this.timeline[i].count++
+    },
+    reslikepost(i, k){
+      count: this.timeline[i].resList[k].count++
     },
     clear(){
       this.tweet = ''
@@ -117,8 +156,8 @@ export default{
     isTweetPresent() {
       return this.tweet !== ''
     },
-    isresPresent() {
-      return this.resmessage !== ''
+    isresPresent(i) {
+      return this.resmessage[i] !== ''
     },
     tweetTime(){
       var date = moment()
