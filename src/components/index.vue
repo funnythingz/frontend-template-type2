@@ -17,12 +17,21 @@
           input.nk-res-message(v-model="resmessage[i]" type="text")
           button.nk-res-push(@click="respost(i)")
             | res
-        .list-group
-          .list-item-res-text(v-for="(l, k) in t.resList")
-            | {{l.res}}
-            div.res-like-button-pos
-              button.nk-res-like-button(@click="reslikepost(i, k)")
-                | {{l.count}}　like
+        div
+          .list-group
+            .list-item-res-text(v-for="(l, k) in t.resList")
+              div.nk-many-inres-container
+                div.nk-many-inres-left
+                  | {{l.res}}
+                div.res-like-button-pos
+                  button.nk-res-like-button(@click="reslikepost(i, k)")
+                    | {{l.rescount}} like
+  ul.nk-numbers
+    | ＜
+    li.nk-numbers-list(v-for="n in 5")
+      a.nk-numbers-link(href="#")
+        | {{n}}
+    | ＞
 </template>
 
 <style lang="sass">
@@ -66,6 +75,7 @@
     margin-top: 15px
     border-top: solid 0.5px
     border-color: #dcdcdc
+    flex-grow: 6
   .nk-many-res
     text-align: right
     margin: 0 0 10px 0
@@ -98,9 +108,32 @@
       color: #fff
   .nk-res-like-button
     background: linear-gradient(pink, hotpink)
+    border: 0 none
+    font-size: 14px
+    border-radius: 15px
+    overflow: hidden
+    background: linear-gradient(pink, hotpink)
+    color: #fff
+    cursor: pointer
+    &:hover
+      background: deeppink
+  .nk-many-inres-container
+    display: flex
+  .nk-many-inres-left
+    width: 200px
   .res-like-button-pos
-    display: inline-block
+    flex: 1
     text-align: right
+  .nk-numbers
+    list-style: none
+    text-align: center
+  .nk-numbers-list
+    display: inline-block
+  .nk-numbers-link
+    border: solid
+    margin: 5px
+    padding: 5px
+    text-decoration: none
 </style>
 
 <script>
@@ -133,10 +166,8 @@ export default{
       if (this.isresPresent(i)){
         this.timeline[i].resList.push({
           res: this.resmessage[i],
-          count: 0
+          rescount: 0
         })
-        console.log(this.resList)
-        console.log(this.resmessage)
         this.resmessage[i] = ''
       }
     },
@@ -144,7 +175,7 @@ export default{
       count: this.timeline[i].count++
     },
     reslikepost(i, k){
-      count: this.timeline[i].resList[k].count++
+      rescount: this.timeline[i].resList[k].rescount++
     },
     clear(){
       this.tweet = ''
