@@ -1,37 +1,42 @@
 <template lang="pug">
 .container
-  textarea.post-message(v-model="tweet" placeholder="今日もあついね。")
-  div.timeline
-    button.nk-tweet-push(@click="post()")
-      | post
-    .list-group
-      .list-item-tweet-text(v-for="(t, i) in timeline")
-        div.nk-time-line-text
-          | {{t.tweet}}
-          button.nk-tweet-like(@click="likepost(i)")
-            | {{t.count}} like
-        div.nk-time-line-date
-          | {{t.date}}
-        br
-        div.nk-many-res
-          input.nk-res-message(v-model="resmessage[i]" type="text")
-          button.nk-res-push(@click="respost(i)")
-            | res
-        div
-          .list-group
-            .list-item-res-text(v-for="(l, k) in t.resList")
-              div.nk-many-inres-container
-                div.nk-many-inres-left
-                  | {{l.res}}
-                div.res-like-button-pos
-                  button.nk-res-like-button(@click="reslikepost(i, k)")
-                    | {{l.rescount}} like
-  ul.nk-numbers
-    | ＜
-    li.nk-numbers-list(v-for="n in 5")
-      a.nk-numbers-link(href="#")
-        | {{n}}
-    | ＞
+  div.nk-main-left-column
+    | わーい
+  div.nk-main-center-column
+    textarea.post-message(v-model="tweet" placeholder="今日もあついね。")
+    div.timeline
+      button.nk-tweet-push(@click="post()")
+        | post
+      .list-group
+        .list-item-tweet-text(v-for="(t, i) in timeline")
+          div.nk-time-line-text
+            | {{t.tweet}}
+            button.nk-tweet-like(@click="likepost(i)")
+              | {{t.count}} like
+          div.nk-time-line-date
+            | {{t.date}}
+          br
+          div.nk-many-res
+            input.nk-res-message(v-model="resmessage[i]" type="text")
+            button.nk-res-push(@click="respost(i)")
+              | res
+          div
+            .list-group
+              .list-item-res-text(v-for="(l, k) in t.resList")
+                div.nk-many-inres-container
+                  div.nk-many-inres-left
+                    | {{l.res}}
+                  div.res-like-button-pos
+                    button.nk-res-like-button(@click="reslikepost(i, k)")
+                      | {{l.rescount}} like
+    ul.nk-numbers
+      | ＜
+      li.nk-numbers-list(v-for="n in 5")
+        a.nk-numbers-link(href="#")
+          | {{n}}
+      | ＞
+  div.nk-main-right-column
+    | わーい
 </template>
 
 <style lang="sass">
@@ -39,7 +44,8 @@
     outline: none
   .container
     margin: 0 auto
-    width: 40em
+    width: 100vw
+    display: flex
   .post-message
     width: 50em
     height: 10em
@@ -125,6 +131,7 @@
     flex: 1
     text-align: right
   .nk-numbers
+    padding: 0
     list-style: none
     text-align: center
   .nk-numbers-list
@@ -134,6 +141,21 @@
     margin: 5px
     padding: 5px
     text-decoration: none
+  .nk-main-left-column
+    background: lavenderblush
+    width: 300vw
+    height: 100vh
+    position: sticky
+    top: 0
+  .nk-main-center-column
+    background: honeydew
+    flex: 1
+  .nk-main-right-column
+    background: azure
+    width: 300vw
+    height: 100vh
+    position: sticky
+    top: 0
 </style>
 
 <script>
